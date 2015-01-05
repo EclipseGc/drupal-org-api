@@ -1,0 +1,6 @@
+index.php
+vendor/*
+composer.lock
+.idea
+*.iml
+.htaccess

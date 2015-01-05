@@ -1,0 +1,23 @@
+{
+    "name": "eclipsegc/drupal-org-api",
+    "type": "library",
+    "description": "Drupal.org API SDK for PHP.",
+    "keywords": ["drupal", "drupal.org"],
+    "homepage": "https://github.com/EclipseGc/drupal-org-api",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Kris Vanderwater"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "5.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "EclipseGc\\DrupalOrg\\Api\\": "src/"
+        }
+    }
+}
+
