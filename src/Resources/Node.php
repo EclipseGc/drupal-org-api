@@ -10,7 +10,7 @@ namespace EclipseGc\DrupalOrg\Api\Resources;
 use EclipseGc\DrupalOrg\Api\FactoryInterface;
 use EclipseGc\DrupalOrg\Api\Resources\Node\NodeInterface;
 
-class Node implements ResourceInterface, NodeInterface {
+class Node implements NodeInterface {
 
   use GetResource;
 
