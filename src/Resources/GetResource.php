@@ -13,7 +13,7 @@ trait GetResource {
    */
   protected $factory;
 
-  protected function getResource($resource_type, $id) {
+  public function getResource($resource_type, $id) {
     $response = $this->factory->request($resource_type, $id);
     return $this->factory->createObjectType($resource_type, $response->json());
   }
