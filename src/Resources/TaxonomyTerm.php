@@ -68,7 +68,7 @@ class TaxonomyTerm implements ResourceInterface {
    * @param $parent
    * @param $parents_all
    */
-  public function __construct(FactoryInterface $factory, $tid, $name, $description, $weight, $node_count, $url, $parent, $parents_all) {
+  public function __construct(FactoryInterface $factory, $tid, $name, $node_count = 0, $url = '', $parent = array(), $parents_all = array(), $weight = 0, $description = '') {
     $this->factory = $factory;
     $this->tid = $tid;
     $this->name = $name;
@@ -123,14 +123,14 @@ class TaxonomyTerm implements ResourceInterface {
   }
 
   /**
-   * @return mixed
+   * @return TaxonomyTerm
    */
   public function getParent() {
     return $this->getResource($this->parent['resource'], $this->parent['id']);
   }
 
   /**
-   * @return mixed
+   * @return array
    */
   public function getParentsAll() {
     $parents_all = [];

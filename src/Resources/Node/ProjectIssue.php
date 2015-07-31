@@ -28,6 +28,8 @@ class ProjectIssue extends Node {
 
   protected $project;
 
+  protected $issueCredit;
+
   protected $issueFiles;
 
   protected $issueParent;
@@ -36,7 +38,7 @@ class ProjectIssue extends Node {
 
   protected $issueVersion;
 
-  public function __construct(FactoryInterface $factory, $body, $taxonomy_vocabulary_9, $field_issue_status, $field_issue_priority, $field_issue_category, $field_issue_component, $field_issue_assigned, $field_project, $field_issue_files, $field_issue_parent, $field_issue_related, $field_issue_version, $nid, $vid, $is_new, $type, $title, $language, $url, $edit_url, $status, $promote, $sticky, $created, $changed, $author, $book_ancestors, $comment, $comments, $comment_count, $comment_count_new, $has_new_content, $last_comment_timestamp) {
+  public function __construct(FactoryInterface $factory, $body, $taxonomy_vocabulary_9, $field_issue_status, $field_issue_priority, $field_issue_category, $field_issue_component, $field_project, $field_issue_files, $field_issue_related, $field_issue_version, $field_issue_credit, $nid, $vid, $is_new, $type, $title, $language, $url, $edit_url, $status, $promote, $sticky, $created, $changed, $author, $book_ancestors, $comment, $comments, $comment_count, $comment_count_new, $has_new_content, $last_comment_timestamp = 0, $field_issue_assigned = '') {
     $this->taxonomy = $taxonomy_vocabulary_9;
     $this->issueStatus = $field_issue_status;
     $this->issuePriority = $field_issue_priority;
@@ -45,8 +47,9 @@ class ProjectIssue extends Node {
     $this->issueAssigned = $field_issue_assigned;
     $this->project = $field_project;
     $this->issueFiles = $field_issue_files;
-    $this->issueParent = $field_issue_parent;
+//    $this->issueParent = $field_issue_parent;
     $this->issueRelated = $field_issue_related;
+    $this->issueCredit = $field_issue_credit;
     $this->issueVersion = $field_issue_version;
     $this->bookAncestors = $book_ancestors;
     parent::__construct($factory, $body, $nid, $vid, $is_new, $type, $title, $language, $url, $edit_url, $status, $promote, $sticky, $created, $changed, $author, $has_new_content);
