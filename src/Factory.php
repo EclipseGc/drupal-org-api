@@ -7,14 +7,12 @@
 namespace EclipseGc\DrupalOrg\Api;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Request;
 
 class Factory implements FactoryInterface {
 
   protected $objectTypes = array(
     'user' => '\EclipseGc\DrupalOrg\Api\Resources\User',
     'node' => '\EclipseGc\DrupalOrg\Api\Resources\Node',
-    'taxonomy_term' => '\EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm',
   );
 
   function __construct(Client $client) {
@@ -27,23 +25,6 @@ class Factory implements FactoryInterface {
       return $class::getClass($data);
     }
     throw new \Exception(sprintf('No object type %s', $type));
-  }
-
-  public function createList($type, $params, array $data = array()) {
-    $reflector = new \ReflectionClass('\EclipseGc\DrupalOrg\Api\Resources\ResourceList');
-    $data['type'] = $type;
-    $data['params'] = $params;
-    if (!isset($data['factory'])) {
-      $data['factory'] = $this;
-    }
-    $arguments = [];
-    foreach ($reflector->getMethod('__construct')->getParameters() as $param) {
-      $param_name = $param->getName();
-      if (array_key_exists($param_name, $data)) {
-        $arguments[] = $data[$param_name];
-      }
-    }
-    return $reflector->newInstanceArgs($arguments);
   }
 
   public function createObjectType($type, array $data = array()) {
@@ -74,26 +55,6 @@ class Factory implements FactoryInterface {
       throw new \Exception(sprintf('Status code was not OK. %d returned instead.', $request->getStatusCode()));
     }
     return $request;
-  }
-
-  public function pagedRequest($entity_type, array $params, $page = 0) {
-    if (!isset($params['page'])) {
-      $params['page'] = $page;
-    }
-    // You have to add the .json or it doesn't work?
-    $request = $this->client()->createRequest('GET', $entity_type . '.json');
-    // Add our request params.
-    $request->getQuery()->merge($params);
-
-    var_dump($request->getUrl());
-
-    $request = $this->client()->send($request);
-
-    if ($request->getStatusCode() != 200) {
-      throw new \Exception(sprintf('Status code was not OK. %d returned instead.', $request->getStatusCode()));
-    }
-    return $request;
-
   }
 
   /**

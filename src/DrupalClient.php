@@ -66,16 +66,6 @@ class DrupalClient {
   }
 
   /**
-   * Returns a taxonomy term.
-   *
-   * @param $id
-   * @return \EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm
-   */
-  public function getTaxonomyTerm($id) {
-    return $this->getResource('taxonomy_term', $id);
-  }
-
-  /**
    * Returns a
    *
    * @param $moduleName
