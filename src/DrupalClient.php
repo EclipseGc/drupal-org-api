@@ -56,11 +56,4 @@ class DrupalClient {
     return $this->getResource('node', $id);
   }
 
-  /**
-   * @param $id
-   * @return \EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm
-   */
-  public function getTaxonomyTerm($id) {
-    return $this->getResource('taxonomy_term', $id);
-  }
 } 
