@@ -32,6 +32,20 @@ interface FactoryInterface {
    */
   public function request($entity_type, $id);
 
+
+  /**
+   * Makes a paged request.
+   *
+   * @param $entity_type
+   *  The type of entity.
+   * @param $params
+   *  Search parameters.
+   * @param $page
+   *  The integer of the page to load.
+   * @return \GuzzleHttp\Message\ResponseInterface
+   */
+  public function pagedRequest($entity_type, array $params, $page = 0);
+
   /**
    * Results in a full object for the provided data.
    *
@@ -43,4 +57,6 @@ interface FactoryInterface {
    * @return \EclipseGc\DrupalOrg\Api\Resources\ResourceInterface
    */
   public function createObjectType($type, array $data = array());
+
+  public function createList($type, $params, array $data = array());
 }
