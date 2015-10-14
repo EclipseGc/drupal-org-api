@@ -13,7 +13,6 @@ class Factory implements FactoryInterface {
   protected $objectTypes = array(
     'user' => '\EclipseGc\DrupalOrg\Api\Resources\User',
     'node' => '\EclipseGc\DrupalOrg\Api\Resources\Node',
-    'taxonomy_term' => '\EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm',
   );
 
   function __construct(Client $client) {
