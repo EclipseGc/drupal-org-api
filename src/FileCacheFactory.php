@@ -71,10 +71,7 @@ class FileCacheFactory implements FactoryInterface {
   public function request($entity_type, $id) {
     $cacheFilePath = $this->cacheDirectory . '/' . $entity_type . '/' . $id;
 
-    echo $cacheFilePath . PHP_EOL;
-
     if (file_exists($cacheFilePath)) {
-      echo 'cache hit!' . PHP_EOL;
       $data = unserialize(file_get_contents($cacheFilePath));
       if (isset($data->list)) {
         $data = reset($data->list);
@@ -83,14 +80,41 @@ class FileCacheFactory implements FactoryInterface {
     }
     else {
       // No data.
-      echo 'cache miss!' . PHP_EOL;
       $data = $this->baseFactory->request($entity_type, $id);
 
       if (!file_exists($this->cacheDirectory . '/' . $entity_type)) {
         mkdir($this->cacheDirectory . '/' . $entity_type);
       }
       else {
-        file_put_contents($cacheFilePath, serialize(json_decode($data->json())));
+        file_put_contents($cacheFilePath, serialize($data->json()));
+      }
+    }
+
+    return $data;
+  }
+
+  /**
+   * Caching request mechanism. Returns cached requests if we have them.
+   * @inheritdoc
+   */
+  public function pagedRequest($entity_type, array $params, $page = 0) {
+    $paramKeys = array_keys($params);
+    $entityKey = $entity_type . '-' . implode('-', $paramKeys);
+    $paramIds = implode('-', array_values($params)) . '-' . $page;
+    $cacheFilePath = $this->cacheDirectory . '/' . $entityKey . '/' . $paramIds;
+
+    if (file_exists($cacheFilePath)) {
+      $data = unserialize(file_get_contents($cacheFilePath));
+      $data = new Response(200, ['Content-Type' => 'application/json'], Stream::factory(json_encode($data)));
+    }
+    else {
+      $data = $this->baseFactory->pagedRequest($entity_type, $params, $page);
+
+      if (!file_exists($this->cacheDirectory . '/' . $entityKey)) {
+        mkdir($this->cacheDirectory . '/' . $entityKey);
+      }
+      else {
+        file_put_contents($cacheFilePath, serialize($data->json()));
       }
     }
 
@@ -109,5 +133,19 @@ class FileCacheFactory implements FactoryInterface {
    */
   public function createObjectType($type, array $data = array()) {
     return $this->baseFactory->createObjectType($type, $data);
+  }
+
+  /**
+   * Creates a list based on a response.
+   *
+   * @param $entityType
+   * @param $params
+   * @param array $data
+   * @param int $page
+   * @return object
+   */
+  public function createList($entityType, $params, array $data = array(), $page = 0) {
+    $data['factory'] = $this;
+    return $this->baseFactory->createList($entityType, $params, $data, $page);
   }
 }
