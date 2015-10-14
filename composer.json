@@ -1,5 +1,5 @@
 {
-    "name": "nvahalik/drupal-org-api",
+    "name": "eclipsegc/drupal-org-api",
     "type": "library",
     "description": "Drupal.org API SDK for PHP.",
     "keywords": ["drupal", "drupal.org"],
