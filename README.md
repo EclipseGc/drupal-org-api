@@ -3,8 +3,27 @@ Drupal.org API Component
 
 Drupal.org provides a public API for retrieving common data includes all node types, users, comments and more. You can find documentation on that here: https://www.drupal.org/api
 
+Setup with composer
+===================
+
+Run `composer init` but do not use its interactive require. Next edit composer.json and add
+
+```json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/EclipseGc/drupal-org-api"
+        }
+    ],
+    "require": {
+        "EclipseGc/drupal-org-api": "dev-master"
+    }
+```
+
 Using this SDK:
 ==============
+
+
 
 This SDK provides a simple PHP layer for interacting with Drupal.org's API. Currently it supports Users and Nodes with special handling for Project Issue & Page Nodes.
 
@@ -12,6 +31,8 @@ Getting a new DrupalClient class is typically done through the static DrupalClie
 
 ```php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use EclipseGc\DrupalOrg\Api\DrupalClient;
 
@@ -24,6 +45,8 @@ This will provide you a fully instantiated DrupalClient that will return data ob
 
 ```php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use EclipseGc\DrupalOrg\Api\DrupalClient;
 
@@ -41,6 +64,8 @@ Retrieving Nodes is equally straight-forward:
 ```php
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
 use EclipseGc\DrupalOrg\Api\DrupalClient;
 
 $client = DrupalClient::create();
@@ -54,6 +79,8 @@ What's nice about this though is that the returns are all object which can be ch
 
 ```php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use EclipseGc\DrupalOrg\Api\DrupalClient;
 
@@ -82,6 +109,8 @@ This can be simply through:
 
 ```php
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
 
 use EclipseGc\DrupalOrg\Api\DrupalClient;
 
