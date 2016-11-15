@@ -58,6 +58,14 @@ class DrupalClient {
 
   /**
    * @param $id
+   * @return \EclipseGc\DrupalOrg\Api\Resources\Node\ProjectIssue;
+   */
+  public function getProjectIssue($id) {
+    return $this->getResource('project_issue', $id);
+  }
+
+  /**
+   * @param $id
    * @return \EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm
    */
   public function getTaxonomyTerm($id) {
