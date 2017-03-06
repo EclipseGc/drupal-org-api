@@ -14,6 +14,7 @@ class Factory implements FactoryInterface {
     'user' => '\EclipseGc\DrupalOrg\Api\Resources\User',
     'node' => '\EclipseGc\DrupalOrg\Api\Resources\Node',
     'taxonomy_term' => '\EclipseGc\DrupalOrg\Api\Resources\TaxonomyTerm',
+    'project_issue' => '\EclipseGc\DrupalOrg\Api\Resources\Node\ProjectIssue',
   );
 
   function __construct(Client $client) {
@@ -29,6 +30,7 @@ class Factory implements FactoryInterface {
   }
 
   public function createObjectType($type, array $data = array()) {
+    $data = (isset($data['list'])) ? $data['list'][0] : $data;
     $objectClass = $this->getObjectTypeClass($type, $data);
     $reflector = new \ReflectionClass($objectClass);
     if (!isset($data['factory'])) {
@@ -51,7 +53,14 @@ class Factory implements FactoryInterface {
    * @throws \Exception
    */
   public function request($entity_type, $id) {
-    $request = $this->client()->get(['{entity_type}/{id}', ['entity_type' => $entity_type, 'id' => $id]]);
+    switch ($entity_type) {
+        case 'project_issue':
+            $request = $this->client()->get(['node.json?type={entity_type}&nid={id}', ['entity_type' => $entity_type, 'id' => $id]]);
+            break;
+        default:
+            $request = $this->client()->get(['{entity_type}/{id}', ['entity_type' => $entity_type, 'id' => $id]]);
+            break;
+    }
     if ($request->getStatusCode() != 200) {
       throw new \Exception(sprintf('Status code was not OK. %d returned instead.', $request->getStatusCode()));
     }
